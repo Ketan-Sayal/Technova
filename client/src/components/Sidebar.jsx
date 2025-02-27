@@ -14,11 +14,12 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   )
 
   const Sidebar = () => {
+    
     const navigate = useNavigate();
     const [isActive, setIsActive] = useState('dashboard');
   
     return (
-      <div className="flex justify-between items-center flex-col sticky top-5 h-[93vh]">
+      <div className="flex justify-between items-center flex-col sticky top-5 h-[43vh]">
         <Link to="/">
           <Icon styles="w-[52px] h-[52px] bg-[#2c2f32]" imgUrl={logo} />
         </Link>
@@ -39,8 +40,6 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
               />
             ))}
           </div>
-  
-          <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun} />
         </div>
       </div>
     )

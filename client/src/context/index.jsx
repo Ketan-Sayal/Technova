@@ -9,10 +9,11 @@ export const StateProvider = ({ children }) => {
     user:null,
     isLoggedIn: false
   });
-    // Use default chainId handling (from ThirdwebProvider)
+  const [allCampaigns, setAllCampaigns] = useState([]);
+  const [displayedCampaigns, setDisplayedCampaigns] = useState([]);
     const { contract } = useContract('0x348753155C36bc1A40096573D7468691630C8B6a');
     
-    // Get the contract write function
+    
     const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
 
     const address = useAddress();
@@ -24,7 +25,7 @@ export const StateProvider = ({ children }) => {
                 throw new Error("Contract is not initialized yet");
             }
             
-            // Pass ALL arguments in the correct form - this was the issue
+            
             const data = await createCampaign({
                 args: [
                     address, 
@@ -102,7 +103,11 @@ export const StateProvider = ({ children }) => {
         donate,
         getDonations,
         authState,
-        setAuthState
+        setAuthState,
+        allCampaigns,
+        setAllCampaigns,
+        displayedCampaigns,
+        setDisplayedCampaigns
         }}
         >
         {children}

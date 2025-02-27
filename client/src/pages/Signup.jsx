@@ -56,7 +56,7 @@ const Signup = () => {
     };
     
     return (
-        <div className='w-full h-full flex justify-center'>
+        <div className='absolute inset-0 bg-[rgba(0,0,0,0.7)] flex items-center justify-center'>
             <Formik
                 initialValues={defaultValues}
                 onSubmit={handleSubmit}

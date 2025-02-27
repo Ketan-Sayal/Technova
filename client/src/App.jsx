@@ -12,14 +12,14 @@ const App = () => {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                // Check for a stored session in cookies
+                
                 const sessionCookie = Cookies.get('session');
                 const session2 = await auth.getSession();
                 if (sessionCookie && session2) {
                     const session = JSON.parse(sessionCookie);
                     setAuthState({ isLoggedIn: true, user: session });
                 } else {
-                    // If no session in cookies, check Appwrite session
+                    
                     const session = await auth.getSession();
                     if (session) {
                         setAuthState({ isLoggedIn: true, user: session });

@@ -5,14 +5,13 @@ import { useStateContext } from '../context'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
-
-  const { address, contract, getCampagins } = useStateContext();
+  const { address, contract, getCampagins, allCampaigns, setAllCampaigns, displayedCampaigns, setDisplayedCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
     const data = await getCampagins();
-    setCampaigns(data);
+    setAllCampaigns(data);
+    setDisplayedCampaigns(data); // Initially, displayed campaigns are the same as all campaigns
     setIsLoading(false);
   }
 
@@ -24,7 +23,7 @@ const Home = () => {
     <Campaign 
       title="All Campaigns"
       isLoading={isLoading}
-      campaigns={campaigns}
+      campaigns={displayedCampaigns} // Use the filtered campaigns for display
     />
   )
 }

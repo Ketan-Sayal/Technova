@@ -10,8 +10,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const { connect, address } = useStateContext();
-  const {authState, setAuthState} = useStateContext();
+  const { connect, address, authState, setAuthState,allCampaigns, setAllCampaigns, displayedCampaigns, setDisplayedCampaigns } = useStateContext();
+  const [searchVal, setSearchVal] = useState('');
   const handleLogout = async()=>{
     try{
       if(!authState.isLoggedIn) return;
@@ -29,13 +29,36 @@ const Navbar = () => {
     navigate('/signup');
 }
 
+const handleSearch = () => {
+  if (!searchVal.trim()) {
+    setDisplayedCampaigns(allCampaigns);
+    return;
+  }
+  
+  const searchedCampaigns = allCampaigns.filter((campaign) => 
+    campaign.title.toLowerCase().includes(searchVal.toLowerCase())
+  );
+  setDisplayedCampaigns(searchedCampaigns);
+}
+
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
       <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
-        <input type="text" placeholder="Search for campaigns" className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none" />
+        <input 
+        type="text" 
+        placeholder="Search for campaigns" 
+        className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none" 
+        value={searchVal}
+        onChange={(e)=>setSearchVal(e.target.value)}
+        />
         
         <div className="w-[72px] h-full rounded-[20px] bg-[#4acd8d] flex justify-center items-center cursor-pointer">
-          <img src={search} alt="search" className="w-[15px] h-[15px] object-contain"/>
+          <img 
+          src={search} 
+          alt="search"  
+          className="w-[15px] h-[15px] object-contain"
+          onClick={handleSearch}
+          />
         </div>
       </div>
 
@@ -76,7 +99,6 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Small screen */}
         <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
             <img src={logo} alt="user" className="w-[60%] h-[60%] object-contain" />
