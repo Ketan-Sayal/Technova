@@ -1,10 +1,14 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdweb-dev/react';
 import { ethers } from "ethers";
 
 const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
+  const [authState, setAuthState] = useState({
+    user:null,
+    isLoggedIn: false
+  });
     // Use default chainId handling (from ThirdwebProvider)
     const { contract } = useContract('0x348753155C36bc1A40096573D7468691630C8B6a');
     
@@ -96,7 +100,9 @@ export const StateProvider = ({ children }) => {
         getCampagins,
         getUserCampaigns,
         donate,
-        getDonations
+        getDonations,
+        authState,
+        setAuthState
         }}
         >
         {children}

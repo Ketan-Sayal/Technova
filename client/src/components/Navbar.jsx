@@ -1,16 +1,33 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-
 import { useStateContext } from '../context';
 import { CustomButton } from './';
 import { logo, menu, search, thirdweb } from '../assets';
 import { navlinks } from '../constants';
+import { auth } from '../appwrite/auth';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
   const [toggleDrawer, setToggleDrawer] = useState(false);
   const { connect, address } = useStateContext();
+  const {authState, setAuthState} = useStateContext();
+  const handleLogout = async()=>{
+    try{
+      if(!authState.isLoggedIn) return;
+      const sessionLogout = await auth.logout();
+      if(sessionLogout){
+        setAuthState({isLoggedIn:false, user:null});
+        navigate('/');
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleSignup = ()=>{
+    navigate('/signup');
+}
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -32,6 +49,25 @@ const Navbar = () => {
             else connect()
           }}
         />
+
+          <CustomButton 
+              btnType="button"
+              title={authState.isLoggedIn? 'Logout' : 'Login'}
+              styles={authState.isLoggedIn ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
+              handleClick={() => {
+                if(!authState.isLoggedIn) navigate('/login')
+                else handleLogout();
+              }}
+            />
+
+            {!authState.isLoggedIn && (
+              <CustomButton 
+              btnType="button"
+              title='Signup'
+              styles={'bg-[#1dc071]'}
+              handleClick={handleSignup}
+            />
+            )}
 
         <Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
@@ -77,7 +113,7 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <div className="flex mx-4">
+            <div className="flex gap-3 mx-4">
             <CustomButton 
               btnType="button"
               title={address ? 'Create a campaign' : 'Connect'}

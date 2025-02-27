@@ -12,11 +12,15 @@
     "@rollup/plugin-inject": "^5.0.5",
     "@thirdweb-dev/react": "^4.9.4",
     "@thirdweb-dev/sdk": "^4.0.99",
+    "appwrite": "^17.0.0",
     "ethers": "^5.7.2",
+    "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "react": "^18.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.2.0",
-    "thirdweb": "^5"
+    "thirdweb": "^5",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.0.2",
