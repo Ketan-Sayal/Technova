@@ -32,7 +32,7 @@ function CreateCampaign() {
         setIsLoading(true);
         await createCampaign({...form, target: ethers.utils.parseUnits(form.target, 18)});//Ethers change
         setIsLoading(false);
-        navigate('/');
+        navigate('/home');
       }else{
         alert('Provide a valid image url');
         setForm({...form, image:''});

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { hero_img2, hero_img3, hero_img4 } from "../assets";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../components";
 
 const images = [hero_img2, hero_img3, hero_img4];
 
@@ -32,7 +33,8 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div
+    <div className="text-white flex flex-col gap-16">
+        <div
       className="relative overflow-hidden h-[700px] w-full bg-cover bg-center flex items-center justify-center transition-all duration-1000 ease-in-out"
       style={{ backgroundImage: `url(${images[currentIndex]})` }}
     >
@@ -53,6 +55,37 @@ const LandingPage = () => {
           Donate Now
         </button>
       </div>
+    
+    </div>
+    <div className="flex flex-col gap-8 mx-6">
+    <div className="flex flex-col gap-3 text-white">
+        <div className="flex-col flex gap-4">
+        <h1 className="font-bold text-5xl">Fundraise for anyone</h1>
+        </div>
+    </div>
+    <hr className="border-slate-500"/>
+    <div className="flex flex-col gap-3">
+        <div className="flex-col flex gap-4">
+        <h1 className="font-bold text-4xl text-gray-200">Yourself</h1>
+        <p className="text-2xl font-light">Funds are delivered to your bank account for your own use</p>
+        </div>
+    </div>
+    <hr className="border-slate-500"/>
+    <div className="flex flex-col gap-3 text-white">
+        <div className="flex-col flex gap-4">
+        <h1 className="font-bold text-4xl text-gray-200">Friends and family</h1>
+        <p className="text-2xl font-light">You’ll invite a beneficiary to receive funds or distribute them yourself</p>
+        </div>
+    </div>
+    <hr className="border-slate-500"/>
+    <div className="flex flex-col gap-3 text-white">
+        <div className="flex-col flex gap-4">
+        <h1 className="font-bold text-4xl text-gray-200">Charity</h1>
+        <p className="text-2xl font-light">Funds are delivered to your chosen nonprofit for youf</p>
+        </div>
+    </div>
+    </div>
+    <Footer />
     </div>
   );
 };
