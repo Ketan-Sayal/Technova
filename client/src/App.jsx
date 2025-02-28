@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, CreateCampaign, Profile, CampaignDetails, Login, Signup } from './pages';
+import { Home, CreateCampaign, Profile, CampaignDetails, Login, Signup, LandingPage } from './pages';
 import { Sidebar, Navbar } from './components';
 import { useStateContext } from './context';
-import Cookies from 'js-cookie'; // Import js-cookie
-import { auth } from './appwrite/auth'; // Import authentication module
+import Cookies from 'js-cookie'; 
+import { auth } from './appwrite/auth'; 
 
 const App = () => {
     const { setAuthState } = useStateContext();
@@ -46,12 +46,13 @@ const App = () => {
                 <Navbar />
 
                 <Routes>
-                    <Route path='/' element={<Home />} />
+                    <Route path='/home' element={<Home />} />
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/create-campaign' element={<CreateCampaign />} />
                     <Route path='/campaign-details/:id' element={<CampaignDetails />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/signup' element={<Signup />} />
+                    <Route path='/' element={<LandingPage />} />
                 </Routes>
             </div>
         </div>

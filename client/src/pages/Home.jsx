@@ -8,16 +8,17 @@ const Home = () => {
   const { address, contract, getCampagins, allCampaigns, setAllCampaigns, displayedCampaigns, setDisplayedCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
-    setIsLoading(true);
-    const data = await getCampagins();
-    setAllCampaigns(data);
-    setDisplayedCampaigns(data); // Initially, displayed campaigns are the same as all campaigns
-    setIsLoading(false);
-  }
+      setIsLoading(true);
+      const data = await getCampagins();
+      setAllCampaigns(data);
+      setDisplayedCampaigns(data); // Initially, displayed campaigns are the same as all campaigns
+      setIsLoading(false);
+    }
+  
+    useEffect(() => {
+      if(contract) fetchCampaigns();
+    }, [address, contract]);
 
-  useEffect(() => {
-    if(contract) fetchCampaigns();
-  }, [address, contract]);
 
   return (
     <Campaign 
