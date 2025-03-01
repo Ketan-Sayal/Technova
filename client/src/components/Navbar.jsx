@@ -145,6 +145,24 @@ const handleSearch = () => {
                 else connect();
               }}
             />
+            <CustomButton 
+              btnType="button"
+              title={authState.isLoggedIn? 'Logout' : 'Login'}
+              styles={authState.isLoggedIn ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
+              handleClick={() => {
+                if(!authState.isLoggedIn) navigate('/login')
+                else handleLogout();
+              }}
+            />
+
+            {!authState.isLoggedIn && (
+              <CustomButton 
+              btnType="button"
+              title='Signup'
+              styles={'bg-[#1dc071]'}
+              handleClick={handleSignup}
+            />
+            )}
             </div>
           </div>
         </div>

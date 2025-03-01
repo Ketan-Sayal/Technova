@@ -6,12 +6,15 @@ import { CustomButton } from '../components';
 import { useStateContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 const Login = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { setAuthState } = useStateContext();
     const navigate = useNavigate();
+    const [isText, setIsText] = useState('password');
     
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Email is required'),
@@ -61,7 +64,7 @@ const Login = () => {
     };
     
     return (
-        <div className='absolute inset-0 z-10 h-screen bg-[rgba(0,0,0,0.7)] flex items-center justify-center flex-col'>
+        <div className='absolute w-screen inset-0 z-10 h-screen bg-[rgba(0,0,0,0.7)] flex items-center justify-center flex-col'>
             <Formik
                 initialValues={defaultValues}
                 onSubmit={handleSubmit}
@@ -96,12 +99,29 @@ const Login = () => {
                         </div>
                         
                         <div className="w-full flex flex-col">
-                            <Field
+                           <div className='w-full relative'>
+                           <Field
                                 placeholder='Password'
-                                type='password'
-                                className='py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]'
+                                type={isText}
+                                className='py-[15px] w-full  sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]'
                                 name='password'
                             />
+                            {
+                                (isText==='password')?(
+                                    <FontAwesomeIcon
+                                    onClick={()=>{
+                                        setIsText('text');
+                                    }}
+                                    className='absolute right-6 bottom-4 cursor-pointer text-white' icon={faEyeSlash} />
+                                ):(
+                                    <FontAwesomeIcon
+                                    onClick={()=>{
+                                        setIsText('password');
+                                    }}
+                                    icon={faEye} className='absolute right-6 bottom-4 cursor-pointer text-white' />
+                                )
+                            }
+                           </div>
                             {errors.password && touched.password && (
                                 <span className="text-red-500 text-sm self-start mt-1">
                                     {errors.password}

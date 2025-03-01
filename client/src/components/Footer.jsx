@@ -26,7 +26,7 @@ function Footer() {
                 <p className="text-sm">Contact Us</p>
                 </Link>
             </div>
-            <p className="text-center font-bold cursor-default">Copyright © 2025 HopeFund | All rights reserved</p>
+            <p className="text-center font-bold cursor-default">HopeFund Copyright © 2025 | All rights reserved</p>
         </div>
     );
 }
