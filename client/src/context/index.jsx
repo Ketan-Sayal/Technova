@@ -46,36 +46,49 @@ export const StateProvider = ({ children }) => {
     }
 
     const getCampagins = async () => {
-        const campaigns = await contract.call("getCampagins");
+        try{
+          const campaigns = await contract.call("getCampagins");
         const parsedCampaigns = campaigns.map((campaign, i) => ({
-            owner: campaign[0], // Address
-            title: campaign[1], // String
-            description: campaign[2], // String
-            target: ethers.utils.formatEther(campaign[3].toString()), // Number (Ether conversion)
-            deadline: campaign[4].toNumber(), // Number
+            owner: campaign[0], 
+            title: campaign[1], 
+            description: campaign[2], 
+            target: ethers.utils.formatEther(campaign[3].toString()),
+            deadline: campaign[4].toNumber(), 
             amountCollected: ethers.utils.formatEther(campaign[5].toString()), // Number (Ether conversion)
             image: campaign[6], // String (URL)
             pId: i
           }));
           return parsedCampaigns;
+        }catch(err){
+          throw err;
+        }
 
       }
     
       const getUserCampaigns = async () => {
-        const allCampaigns = await getCampagins();
+        try{
+          const allCampaigns = await getCampagins();
     
         const filteredCampaigns = allCampaigns.filter((campaign) => campaign.owner === address);
     
         return filteredCampaigns;
+        }catch(err){
+          throw err;
+        }
       }
     
       const donate = async (pId, amount) => {
-        const data = await contract.call('donateToCampaign', [pId], { value: ethers.utils.parseEther(amount)});
+        try{
+          const data = await contract.call('donateToCampaign', [pId], { value: ethers.utils.parseEther(amount)});
     
         return data;
+        }catch(err){
+          throw err;
+        }
       }
     
       const getDonations = async (pId) => {
+       try{
         const donations = await contract.call('getDonators', [pId]);
         const numberOfDonations = donations[0].length;
     
@@ -89,6 +102,9 @@ export const StateProvider = ({ children }) => {
         }
     
         return parsedDonations;
+       }catch(err){
+         throw err;
+       }
       }
     
     return (

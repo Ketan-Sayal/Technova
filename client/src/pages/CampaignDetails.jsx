@@ -15,6 +15,7 @@ const CampaignDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
   const [donators, setDonators] = useState([]);
+  const [error, setError] = useState(false);
 
   const remainingDays = daysLeft(state.deadline);
 
@@ -29,17 +30,27 @@ const CampaignDetails = () => {
   }, [contract, address])
 
   const handleDonate = async () => {
-    setIsLoading(true);
+    try{
+      setError(false);
+      setIsLoading(true);
 
-    await donate(state.pId, amount); 
-
-    navigate('/home');
+    if(amount>-1&& parseFloat(amount)!=parseFloat(0)){
+      await donate(state.pId, amount); 
+      navigate('/home');
+    }else{
+      setError(true);
+    }
     setIsLoading(false);
+    }catch(err){
+      setIsLoading(false);
+      setError(true);
+    }
   }
 
   return (
     <div>
       {isLoading && <Loader />}
+      {error && <div className='error sticky top-3 right-80 text-center bg-[rgba(0,0,0,0.7)] text-white p-4 rounded-lg'><span>Transaction failed</span></div>}
 
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
